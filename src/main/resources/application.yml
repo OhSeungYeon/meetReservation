@@ -1,0 +1,220 @@
+spring:
+  profiles: 
+    active: local
+  http:
+    multipart:
+      max-file-size: 100MB # 기본적인 maxSize (ax5ui uploader사용시에는 샘플 참고)
+      max-request-size: 200MB
+  cors: 
+    allowedOrigins: http://localhost, http://127.0.0.1
+  jmx: 
+    enabled: false
+  main:
+    web-environment: true # Web 사용여부 설정
+  mvc:    view:      prefix: /WEB-INF/views/
+      suffix: .jsp
+server:
+  session:
+    tracking-modes: COOKIE
+    cookie:
+      http-only: true
+      secure: false
+  port: 8080
+  ssl:
+    enabled: false
+  error:
+    whitelabel:
+      enabled: false
+  contextPath: 
+base1:
+  multi-datasource:
+    basePackages: com.gbm.edu
+    default-datasource-name: edu
+    datasources:
+      edu:
+        platform: mysql
+        driverClassName: org.mariadb.jdbc.Driver
+        url: jdbc:mariadb://127.0.0.1:3307/gspb?allowMultiQueries=true
+#        url: jdbc:mariadb://127.0.0.1:3306/gspb?allowMultiQueries=true
+        username: gbmp_user
+        password: gbmp1234!@
+        
+edu:
+   location: C:\edu
+   
+shopping:
+  api:
+    use : false # 연계API 사용여부  
+    scheme: http
+    center:
+      host: 165.243.204.126
+      port: 80
+      
+kakao:
+   rest-api-key: a1b357965a484080e80a5317ff0ffbaa
+   api:
+    scheme: https
+    center:
+      host: talk-plugin.kakao.com/otp
+   
+mybatis:
+  config-location: classpath:sqlmap/sqlmap-config.xml
+  mapper-locations: classpath:sqlmap/mapper/*.xml
+  type-aliases-package: com.gbm.edu
+jasypt: # 설정파일 암호화를 위한 jasypt
+  encryptor:
+    bean: jasyptStringEncryptor
+logging:
+   config: classpath:logback-spring.xml
+db:
+  key:
+    location: .
+    fileName: sel_key_enc
+    publicKey: ${publicKey}
+##tomcat:
+##  ajp:
+##    protocol: AJP/1.3
+##    port: 18009
+##    enabled: true
+     
+---
+spring:
+  profiles: dev
+  http:
+    multipart:
+      max-file-size: 100MB # 기본적인 maxSize (ax5ui uploader사용시에는 샘플 참고)
+      max-request-size: 200MB
+  cors: 
+    allowedOrigins: http://localhost, http://127.0.0.1
+  jmx: 
+    enabled: false
+  main:
+    web-environment: true # Web 사용여부 설정
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+server:
+  session:
+    tracking-modes: COOKIE
+    cookie:
+      http-only: true
+      secure: false
+  port: 8080
+  ssl:
+    enabled: false
+  error:
+    whitelabel:
+      enabled: false
+  contextPath: 
+base1:
+  multi-datasource:
+    basePackages: com.gbm.edu
+    default-datasource-name: edu
+    datasources:
+      edu:
+        platform: mysql
+        driverClassName: org.mariadb.jdbc.Driver
+        url: jdbc:mariadb://gsitm-bizmsg-dev-postgre-master.cricf5agbwwl.ap-northeast-2.rds.amazonaws.com:3306/gspb?allowMultiQueries=true
+#        url: jdbc:mariadb://127.0.0.1:3306/gspb?allowMultiQueries=true
+        username: gbmp_user
+        password: gbmp1234!@
+        
+edu:
+   location: /home/ec2-user/TJM_LOG
+   
+shopping:
+  api:
+    use : false # 연계API 사용여부  
+    scheme: http
+    center:
+      host: 165.243.204.126
+      port: 80
+
+kakao:
+   rest-api-key: a1b357965a484080e80a5317ff0ffbaa
+   api:
+    scheme: https
+    center:
+      host: talk-plugin.kakao.com/otp
+
+mybatis:
+  config-location: classpath:sqlmap/sqlmap-config.xml
+  mapper-locations: classpath:sqlmap/mapper/*.xml
+  type-aliases-package: com.gbm.edu
+jasypt: # 설정파일 암호화를 위한 jasypt
+  encryptor:
+    bean: jasyptStringEncryptor
+logging:
+   config: classpath:logback-spring.xml
+db:
+  key:
+    location: .
+    fileName: sel_key_enc
+    publicKey: ${publicKey}
+##tomcat:
+##  ajp:
+##    protocol: AJP/1.3
+##    port: 18009
+##    enabled: true
+     
+---
+spring:
+  profiles: prod
+  http:
+    multipart:
+      max-file-size: 100MB # 기본적인 maxSize (ax5ui uploader사용시에는 샘플 참고)
+      max-request-size: 200MB
+  cors: 
+    allowedOrigins: http://localhost, http://127.0.0.1, http://117.52.66.65, http://172.30.15.21, http://172.30.15.22
+  jmx: 
+    enabled: false
+  main:
+    web-environment: false # Web 사용여부 설정
+server:
+  session:
+    tracking-modes: COOKIE
+    cookie:
+      http-only: true
+      secure: false
+  port: 9998
+  ssl:
+    enabled: false
+  error:
+    whitelabel:
+      enabled: false
+  contextPath: 
+base1:
+  multi-datasource:
+    basePackages: com.gbm.edu
+    default-datasource-name: edu
+    datasources:
+      edu:
+        platform: mysql
+        driverClassName: org.mariadb.jdbc.Driver
+        url: jdbc:mariadb://172.30.15.23:43306/gbmp
+        username: sys_gbmp
+        password: gbmp1234!@
+        
+edu:
+   location: /home/ec2-user/TJM_LOG
+   
+mybatis:
+  config-location: classpath:sqlmap/sqlmap-config.xml
+  mapper-locations: classpath:sqlmap/mapper/*.xml
+  type-aliases-package: com.gbm.edu
+jasypt: # 설정파일 암호화를 위한 jasypt
+  encryptor:
+    bean: jasyptStringEncryptor
+logging:
+   config: file:./config/logback-spring.xml    
+db:
+  key:
+    location: .
+    fileName: sel_key_enc
+    publicKey: ${publicKey}
+##tomcat:
+##  ajp:
+##    protocol: AJP/1.3
+##    port: 18009
+##    enabled: true            

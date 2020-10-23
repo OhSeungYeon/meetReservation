@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gbm.edu.service.EduApiMapper">
+	<select id="getApi" parameterType="hashmap" resultType="com.gbm.edu.util.CamelCaseMap">
+	SELECT /* TalkOrdedrApiMapper | getApi | byyun */
+	       DATA_CONT
+	  FROM TJM_DATA_LOG_TRN T
+	 WHERE T.API_FLAG = 'DATASTART'
+	   AND T.PROC_ID = #{seq}
+  	</select>
+</mapper>

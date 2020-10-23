@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<script src="/webjars/jquery/2.2.4/jquery.min.js" />
+<script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js" />
+<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<style>
+html {
+	
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background: #e7ecf0;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+p {
+	font-size: 12px;
+	color: #373737;
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 18px;
+}
+
+p a {
+	color: #218bdc;
+	font-size: 12px;
+	text-decoration: none;
+}
+
+a {
+	outline: none;
+}
+
+.f-left {
+	float: left;
+}
+
+.f-right {
+	float: right;
+}
+
+.clear {
+	clear: both;
+	overflow: hidden;
+}
+
+#block_error {
+	width: 845px;
+	height: 384px;
+	border: 1px solid #cccccc;
+	margin: 72px auto 0;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	background: #fff no-repeat 0 51px;
+}
+
+#block_error div {
+	padding: 100px 40px 0 186px;
+}
+
+#block_error div h2 {
+	color: #218bdc;
+	font-size: 24px;
+	display: block;
+	padding: 0 0 14px 0;
+	border-bottom: 1px solid #cccccc;
+	margin-bottom: 12px;
+	font-weight: normal;
+}
+</style>
+</head>
+<body marginwidth="0" marginheight="0">
+	<div id="block_error">
+		<div>
+			<h2>Error 404. &nbsp;존재하지 않는 페이지입니다.</h2>
+			<p></p>
+			<p>
+			<div class="error-actions">
+				<a href="#" onclick="history.back();" class="btn btn-primary btn-lg"><span
+					class="glyphicon glyphicon-home"></span> 이전으로 가기</a>
+			</div>
+			</p>
+		</div>
+	</div>
+</body>
+</html>

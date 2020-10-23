@@ -1,0 +1,16 @@
+version: 0.0
+os: linux
+files:
+  - source:  /
+    destination: /home/ec2-user/build
+
+hooks:
+  BeforeInstall:
+    - location: before-install.sh
+      timeout: 180
+  AfterInstall:
+    - location: deploy-app.sh
+      timeout: 180
+  ApplicationStart:
+    - location: start-app.sh
+      timeout: 180
