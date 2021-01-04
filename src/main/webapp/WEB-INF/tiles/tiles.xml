@@ -1,0 +1,51 @@
+<!DOCTYPE tiles-definitions PUBLIC
+  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+ 
+<tiles-definitions>
+ 
+    <!-- 레이아웃을 적용하는 파일 -->
+    <definition name="base">
+        <put-attribute name="left"   value="/WEB-INF/tiles/left.jsp" />
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
+    </definition>
+ 
+    <definition name="page:*" extends="base" template="/WEB-INF/tiles/template.jsp">
+        <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
+    </definition>
+    
+    <!-- 레이아웃이 필요하지 않은 파일 -->
+    <definition name="login">
+        <put-attribute name="left"   value="" />
+        <put-attribute name="header" value="" />
+        <put-attribute name="footer" value="" />
+    </definition>
+    
+    <definition name="/*" extends="login" template="/WEB-INF/tiles/templateEmpty.jsp">
+        <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
+    </definition>
+    
+    <!-- header만 필요한 파일 -->
+    <definition name="head">
+        <put-attribute name="left"   value="" />
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+        <put-attribute name="footer" value="" />
+    </definition>
+    
+    <definition name="part:*" extends="head" template="/WEB-INF/tiles/templateHeader.jsp">
+        <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
+    </definition>
+    
+    <!-- header, footer가 필요한 파일 -->
+    <definition name="foot">
+        <put-attribute name="left"   value="" />
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
+    </definition>
+    
+    <definition name="foot:*" extends="foot" template="/WEB-INF/tiles/templateFooter.jsp">
+        <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
+    </definition>
+    
+</tiles-definitions>

@@ -34,10 +34,10 @@ base1:
       talkbot:
         platform: mysql
         driverClassName: org.mariadb.jdbc.Driver
-        url: jdbc:mariadb://127.0.0.1:3307/gspb?allowMultiQueries=true
+        url: jdbc:mariadb://127.0.0.1:3307/education?allowMultiQueries=true
 #        url: jdbc:mariadb://127.0.0.1:3306/gspb?allowMultiQueries=true
-        username: gbmp_user
-        password: gbmp1234!@
+        username: root
+        password: oh1234
   fileupload: # 파일업로드
     location: d:\temp #업로드 폴더경로
     max-file-size: 100

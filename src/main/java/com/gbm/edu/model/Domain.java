@@ -37,4 +37,67 @@ public class Domain {
 	 * 최종변경일
 	 */
     private Date modDt = new Date();
+
+    
+    
+    
+	public String getCudMode() {
+		return cudMode;
+	}
+
+	public void setCudMode(String cudMode) {
+		this.cudMode = cudMode;
+	}
+
+	public String getRegId() {
+		return regId;
+	}
+
+	public void setRegId(String regId) {
+		this.regId = regId;
+	}
+
+	public String getRegIp() {
+		return regIp;
+	}
+
+	public void setRegIp(String regIp) {
+		this.regIp = regIp;
+	}
+
+	public Date getRegDt() {
+		return regDt;
+	}
+
+	public void setRegDt(Date regDt) {
+		this.regDt = regDt;
+	}
+
+	public String getModId() {
+		return modId;
+	}
+
+	public void setModId(String modId) {
+		this.modId = modId;
+	}
+
+	public String getModIp() {
+		return modIp;
+	}
+
+	public void setModIp(String modIp) {
+		this.modIp = modIp;
+	}
+
+	public Date getModDt() {
+		return modDt;
+	}
+
+	public void setModDt(Date modDt) {
+		this.modDt = modDt;
+	}
+    
+    
+    
+    
 }

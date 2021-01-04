@@ -1,11 +1,250 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gbm.edu.service.EduApiMapper">
-	<select id="getApi" parameterType="hashmap" resultType="com.gbm.edu.util.CamelCaseMap">
-	SELECT /* TalkOrdedrApiMapper | getApi | byyun */
-	       DATA_CONT
-	  FROM TJM_DATA_LOG_TRN T
-	 WHERE T.API_FLAG = 'DATASTART'
-	   AND T.PROC_ID = #{seq}
+
+  	<select id="getList1" resultType="com.gbm.edu.util.CamelCaseMap">
+		SELECT   MEETING_ID
+		       , AVA_PERSON
+		       , MEETING_NM
+		       , MEETING_ETC
+		       , REG_DT
+		       , REG_ID
+		       , MOD_DT
+		       , MOD_ID
+	      FROM MEETING
   	</select>
+  	
+  	<select id="getRes" resultType="com.gbm.edu.util.CamelCaseMap">
+		SELECT   MEETING_ID
+		       , USERNAME
+		       , USER_NM
+		       , REASON
+		       , START_TM
+		       , FINISH_TM
+		       , APPROVAL_TM
+	      FROM RESERVATION
+  	</select>
+  	
+  	<select id="getcountUser" resultType="java.lang.Integer">
+		SELECT count(*) 
+		 FROM user
+	</select>
+	
+	<select id="getUser" resultType="com.gbm.edu.util.CamelCaseMap" parameterType="java.lang.String">
+		SELECT 	@ROWNUM:=@ROWNUM+1 as RN
+			   , USERNAME
+			   , PASSWORD
+			   , MANAGER_LE
+			   , USER_NM
+			   , DEPARTMENT
+			   , PHONE_NUM
+			   , EMAIL
+			   , POSITION
+		  FROM (SELECT @ROWNUM:=0) R, USER
+		HAVING RN BETWEEN #{start} AND #{end}
+		 ORDER BY 1;
+	</select>
+	
+  	<select id="getManager" resultType="com.gbm.edu.util.CamelCaseMap">
+		SELECT DISTINCT MANAGER_LE
+	      FROM USER	
+  	</select>
+  	
+  	<select id="position" resultType="com.gbm.edu.util.CamelCaseMap">
+		SELECT POSITION_NM
+		  FROM POSITION_LEVEL
+		 ORDER BY POSITION_NUM
+  	</select>
+  	
+  	 <select id="department" resultType="com.gbm.edu.util.CamelCaseMap">
+		SELECT DEPARTMENT_NM
+		  FROM DEPARTMENT_LEVEL
+		 ORDER BY DEPARTMENT_NUM
+  	</select>
+
+  	<!-- spring security -->
+  	<select id="readUser" parameterType="String" resultType="com.gbm.edu.security.model.SecurityUser">
+        SELECT username, password, role
+          FROM user
+         WHERE username = #{username}
+    </select>
+    
+     <select id="readUser1" parameterType="String" resultType="com.gbm.edu.security.model.UserInfo">
+        SELECT username, password, role
+          FROM user
+         WHERE username = #{username}
+    </select>
+    
+	<insert id="joinUser" parameterType="com.gbm.edu.security.model.SecurityUser">
+    	INSERT INTO user (username
+    					  , password
+    					  , manager_le
+    					  , user_num
+    					  , user_nm
+    					  , department
+    					  , phone_num
+    					  , email
+    					  , position
+    					  , role
+    					  , reg_dt
+    				      , reg_id
+    				      , reg_ip
+    				      , mod_dt
+    					  , mod_id
+    					  , mod_ip) 
+    	VALUES ( #{username}
+    			 , #{password}
+    			 , #{managerLe}
+    			 , #{userNum}
+    			 , #{userNm}
+    			 , #{department}
+    			 , #{phoneNum}
+    			 , #{email}
+    			 , #{position}
+    			 , #{role}
+    			 , #{regDt}
+    			 , #{regId}
+    			 , #{regIp}
+    			 , #{modDt}
+    			 , #{modId}
+    			 , #{modIp})
+    </insert>
+    
+    <!-- userNum -->
+    <select id="userCount" resultType="String" parameterType="com.gbm.edu.security.model.SecurityUser">
+    	SELECT user_num
+    	  FROM user
+      ORDER BY user_num
+       DESC LIMIT 1
+	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePw">
+		UPDATE user
+		   SET password = #{passwordEn}
+		 WHERE username = #{sessionId}
+	</update>
+	
+	<select id="getPassword" resultType="String">
+		SELECT password
+	      FROM user
+	     WHERE username = #{id}
+  	</select>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="deleteMember">
+		SET foreign_key_checks = 0;
+		DELETE 
+		  FROM user
+		 WHERE username = #{sessionId};
+		SET foreign_key_checks = 1;
+	</delete>
+	
+	<select id="modifyUser" resultType="com.gbm.edu.util.CamelCaseMap">
+		SELECT   username
+			   , user_nm
+			   , department
+			   , phone_num
+			   , email
+			   , position
+	      FROM user
+	     WHERE username = #{sessionId}
+  	</select>
+		 
+	 <!-- 회원정보 수정 -->
+	 <update id="updateMember">
+	 	UPDATE user
+	 	   SET user_nm = #{userNm}
+			   ,department = #{department}
+			   ,phone_num = #{phoneNum}
+			   ,email = #{email}
+			   ,position = #{position}
+			   ,mod_dt = #{modDt}
+    		   ,mod_id = #{modId}
+    		   ,mod_ip = #{modIp}
+		 WHERE username = #{username}
+	 </update>
+	 
+	 <!-- 아이디 중복체크 -->
+	 <select id="idChk" resultType="int">
+        SELECT count(*)
+          FROM user
+         WHERE username = #{username}
+     </select>
+     
+     <!-- 회의실 예약하기 -->
+     <insert id="insertRes" parameterType="com.gbm.edu.api.model.ResModel">
+    	INSERT INTO reservation (meeting_id
+    					  		 , username
+    					  		 , user_nm
+    					  		 , reason
+    					  		 , start_tm
+    					  		 , finish_tm
+    					  		 , reg_dt
+    				      		 , reg_id
+    				      		 , reg_ip
+    				      		 , mod_dt
+    					  		 , mod_id
+    					  		 , mod_ip
+    					  		 , cude_mode) 
+    	VALUES ( #{meetingId}
+    			 , #{username}
+    			 , #{userNm}
+    			 , #{reason}
+    			 , #{startTm}
+    			 , #{finishTm}
+    			 , #{regDt}
+    			 , #{regId}
+    			 , #{regIp}
+    			 , #{modDt}
+    			 , #{modId}
+    			 , #{modIp}
+    			 , #{cudMode})
+    </insert>
+    
+    <!-- 회의실 예약 승인 테이블 (승인컬럼이 null인 것만) -->
+    <select id="approvalRes" parameterType="String" resultType="com.gbm.edu.util.CamelCaseMap">
+		SELECT   MEETING_ID
+		       , USERNAME
+		       , USER_NM
+		       , REASON
+		       , START_TM
+		       , FINISH_TM
+		       , APPROVAL_TM
+	      FROM RESERVATION
+	     WHERE APPROVAL_TM=0 
+	        OR APPROVAL_TM IS NULL
+  	</select>
+  	
+  	<!-- 예약 승인하기 -->
+	<update id="updateRes" parameterType="com.gbm.edu.api.model.ResModel">
+		UPDATE reservation
+		   SET approval_tm = #{approvalTm}
+		 WHERE user_nm = #{userNm}
+	</update>
+	
+	<!-- 승인 건수 count -->
+	 <select id="countApproval" resultType="int">
+        SELECT count(*)
+          FROM reservation
+         WHERE approval_tm=0
+         	OR approval_tm is null
+     </select>
+     
+    <!-- 관리자 등록하기 -->
+	<update id="updateAdmin" parameterType="com.gbm.edu.security.model.SecurityUser">
+		UPDATE user
+		   SET role = #{role}
+		   	   ,manager_le = #{managerLe}
+		   	   ,cude_mode = #{cudMode}
+		 WHERE username = #{username}
+	</update>
+	
+    
+    <update id="updateFailureCountReset">
+    	UPDATE user
+    	   SET failure_cnt=0
+    	 WHERE username = #{username}
+    </update>
+    
 </mapper>

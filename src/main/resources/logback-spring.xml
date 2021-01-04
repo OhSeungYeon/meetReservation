@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
+
+ 
 <configuration scan="true" scanPeriod="30 seconds">
   	<include resource="org/springframework/boot/logging/logback/defaults.xml"/>
-  	<include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+  	<include resource="org/springframework/boot/logging/logback/console-appender.xml"/> 
 
-  	<!-- 경로관련 변수 지정 -->
+  	<!-- 경로관련 변수 지정 --> 
   	<property name="LOG_DIR" value="/logs" />
 	<property name="LOG_FULL_PATH" value="${LOG_DIR}/USTRAedu/gbm-edu.log" />
 
@@ -32,7 +34,7 @@
 	  개발 또는 운영 시에 상세한 정보로 디버깅 목적으로 사용할 정보는 DEBUG로
 	  특정한 상태나 중요한 값(아무나 봐도 상관없는 값)을 출력해야 할 경우에는 INFO 레벨을 사용하여
 	  로깅하는 것이 좋다.
-	  로깅은 비용이 많이드는 작업으로 적절한 로깅으로 어플리케이션을 최적화해야 한다. -->
+	  로깅은 비용이 많이드는 작업으로 적절한 로깅으로 어플리케이션을 최적화해야 한다.-->
 
   	<springProfile name="local">
 	    <logger name="org.springframework.jdbc" level="INFO" />
@@ -48,7 +50,7 @@
 	    <logger name="org.mybatis" level="DEBUG" />
 	    <logger name="com.gbm.edu" level="DEBUG" />
 	    <logger name="com.gbm.edu.job" level="DEBUG" />
-	    <logger name="com.gbm.edu.api" level="INFO" />
+	    <logger name="com.gbm.edu.security" level="INFO" />
 	    <logger name="org.springframework" level="DEBUG" />
 		<root level="INFO">
 			<appender-ref ref="FILE" />
@@ -63,5 +65,5 @@
 		<root level="INFO">
 			<appender-ref ref="FILE" />
 		</root>
-	</springProfile>
+	</springProfile> 
 </configuration>
