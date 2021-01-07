@@ -11,7 +11,7 @@
 		       , REG_ID
 		       , MOD_DT
 		       , MOD_ID
-	      FROM MEETING
+	      FROM meeting
   	</select>
   	
   	<select id="getRes" resultType="com.gbm.edu.util.CamelCaseMap">
@@ -22,7 +22,7 @@
 		       , START_TM
 		       , FINISH_TM
 		       , APPROVAL_TM
-	      FROM RESERVATION
+	      FROM reservation
   	</select>
   	
   	<select id="getcountUser" resultType="java.lang.Integer">
@@ -40,25 +40,25 @@
 			   , PHONE_NUM
 			   , EMAIL
 			   , POSITION
-		  FROM (SELECT @ROWNUM:=0) R, USER
+		  FROM (SELECT @ROWNUM:=0) R, user
 		HAVING RN BETWEEN #{start} AND #{end}
 		 ORDER BY 1;
 	</select>
 	
   	<select id="getManager" resultType="com.gbm.edu.util.CamelCaseMap">
 		SELECT DISTINCT MANAGER_LE
-	      FROM USER	
+	      FROM yser	
   	</select>
   	
   	<select id="position" resultType="com.gbm.edu.util.CamelCaseMap">
 		SELECT POSITION_NM
-		  FROM POSITION_LEVEL
+		  FROM position_level
 		 ORDER BY POSITION_NUM
   	</select>
   	
   	 <select id="department" resultType="com.gbm.edu.util.CamelCaseMap">
 		SELECT DEPARTMENT_NM
-		  FROM DEPARTMENT_LEVEL
+		  FROM department_level
 		 ORDER BY DEPARTMENT_NUM
   	</select>
 
@@ -211,7 +211,7 @@
 		       , START_TM
 		       , FINISH_TM
 		       , APPROVAL_TM
-	      FROM RESERVATION
+	      FROM reservation
 	     WHERE APPROVAL_TM=0 
 	        OR APPROVAL_TM IS NULL
   	</select>
